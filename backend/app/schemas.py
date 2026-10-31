@@ -28,3 +28,17 @@ class CodeAnalysisResponse(BaseModel):
     valid: bool = Field(..., description="Le code est-il syntaxiquement valide ?")
     issues: list[Issue] = Field(default_factory=list, description="Liste des problèmes détectés")
     summary: str = Field(..., description="Résumé global de l'analyse")
+
+
+class DebugResponse(BaseModel):
+    status: str
+    valid: bool
+    issues: list[Issue] = Field(default_factory=list)
+    summary: str
+
+    ai_status: Literal["success", "error", "skipped"]
+    explanation: str | None = None
+    root_causes: list[str] = Field(default_factory=list)
+    corrected_code: str | None = None
+    tests: list[str] = Field(default_factory=list)
+    ai_error: str | None = None

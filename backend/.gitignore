@@ -32,3 +32,11 @@ Thumbs.db
 
 # SQLite databases
 *.db
+.env
+.env.*
+venv/
+.env
+.env.*
+!.env.example
+__pycache__/
+*.pyc
