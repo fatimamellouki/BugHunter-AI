@@ -1,5 +1,7 @@
 
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from app.services.ast_analyzer import analyze_python_code
 from app.schemas import (
     CodeAnalysisRequest,
     CodeAnalysisResponse,
@@ -11,7 +13,16 @@ app = FastAPI(
     description="AI-powered Python debugging assistant",
     version="1.0.0"
 )
-
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:5173",
+        "http://localhost:3000"
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get("/")
 def home():
@@ -29,20 +40,6 @@ def health_check():
 
 
 @app.post("/api/analyze", response_model=CodeAnalysisResponse)
+@app.post("/api/analyze", response_model=CodeAnalysisResponse)
 def analyze_code(request: CodeAnalysisRequest):
-    # Simulation temporaire : le véritable analyseur AST
-    # sera développé dans une prochaine étape.
-    return {
-        "status": "success",
-        "valid": True,
-        "summary": "1 problème potentiel détecté (simulation).",
-        "issues": [
-            {
-                "rule_id": "SIMULATION_01",
-                "type": "ExampleIssue",
-                "line": 1,
-                "severity": SeverityEnum.LOW,
-                "message": "Ceci est une fausse alerte pour tester le schéma."
-            }
-        ]
-    }
+    return analyze_python_code(request.code)
