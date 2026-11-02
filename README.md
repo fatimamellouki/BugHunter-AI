@@ -1,4 +1,4 @@
-# BugHunter AI 🐛
+# BugHunter AI 
 
 **An AI-powered Python code analysis and debugging assistant.**
 
@@ -151,7 +151,7 @@ For questions, suggestions, or collaboration opportunities, feel free to contact
 - Email: fatimamellouki307@gmail.com || fatima.mellouki1@usmba.ac.ma
 
 **Fadwa ERRAMI**
-- GitHub: [@fadaerrami]([https://github.com/](https://github.com/FadwaErrami)
+- GitHub: [@FadwaErrami](https://github.com//FadwaErram)
 - Email:fadwaerrami4@gmail.com || fadwa.errami@usmba.ac.ma
 
 **BugHunter AI — Detect. Understand. Fix.**
