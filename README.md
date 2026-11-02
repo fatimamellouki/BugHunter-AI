@@ -151,7 +151,7 @@ For questions, suggestions, or collaboration opportunities, feel free to contact
 - Email: fatimamellouki307@gmail.com || fatima.mellouki1@usmba.ac.ma
 
 **Fadwa ERRAMI**
-- GitHub: [@FadwaErrami](https://github.com//FadwaErram)
+- GitHub: [@FadwaErrami](https://github.com//FadwaErrami)
 - Email:fadwaerrami4@gmail.com || fadwa.errami@usmba.ac.ma
 
 **BugHunter AI — Detect. Understand. Fix.**
