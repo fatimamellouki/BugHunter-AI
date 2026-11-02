@@ -1,10 +1,10 @@
-import { Bug, Code, FileSearch, LayoutDashboard, X } from 'lucide-react';
+import { Bug, Code, FileSearch, House, X } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
 import { useAnalysis } from '../../context/AnalysisContext';
 import { API_BASE_URL } from '../../services/api';
 
 const LINKS = [
-  { to: '/', label: 'Dashboard', icon: LayoutDashboard, end: true },
+  { to: '/', label: 'Home', icon: House, end: true },
   { to: '/analysis', label: 'Code Analysis', icon: Code },
   { to: '/results', label: 'Analysis Results', icon: FileSearch },
 ];
@@ -40,10 +40,7 @@ export default function Sidebar({ isOpen, onClose }) {
         </ul>
       </nav>
 
-      <p className="sidebar__footer">
-        Backend
-        <code>{API_BASE_URL}</code>
-      </p>
+     
     </aside>
   );
 }

@@ -24,7 +24,7 @@ async function typeCode(user, code) {
   await user.paste(code);
 }
 
-describe('Dashboard and navigation', () => {
+describe('Landing page and navigation', () => {
   it('presents the product and links to a new analysis', async () => {
     const user = userEvent.setup();
     renderApp('/');
@@ -33,29 +33,53 @@ describe('Dashboard and navigation', () => {
     expect(screen.getAllByText('BugHunter AI').length).toBeGreaterThan(0);
     expect(screen.getByText(/not stored, so there is no history/i)).toBeInTheDocument();
 
-    await user.click(screen.getByRole('link', { name: /new analysis/i }));
+    await user.click(screen.getAllByRole('link', { name: /analyze your code/i })[0]);
     expect(screen.getByRole('heading', { level: 1, name: 'Code Analysis' })).toBeInTheDocument();
+  });
+
+  it('shows the simulated analysis and lets the visitor switch tabs and findings', async () => {
+    const user = userEvent.setup();
+    renderApp('/');
+
+    expect(screen.getByText('PotentialZeroDivision')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /PotentialZeroDivision/ })).toHaveAttribute('aria-pressed', 'true');
+    await user.click(screen.getByRole('button', { name: /UnreachableCode/ }));
+    expect(screen.getByRole('button', { name: /UnreachableCode/ })).toHaveAttribute('aria-pressed', 'true');
+
+    await user.click(screen.getByRole('button', { name: 'Corrected code' }));
+    expect(screen.getByText(/proposed fix/i)).toBeInTheDocument();
+  });
+
+  it('runs the simulated analysis again without calling the backend', async () => {
+    const fetchMock = mockFetch(() => Promise.reject(new Error('no network expected')));
+    const user = userEvent.setup();
+    renderApp('/');
+
+    await user.click(screen.getByRole('button', { name: /run again/i }));
+    expect(screen.getByRole('button', { name: /analyzing/i })).toBeDisabled();
+    expect(await screen.findByText('4 issues detected', {}, { timeout: 4000 })).toBeInTheDocument();
+    expect(fetchMock).not.toHaveBeenCalled();
   });
 
   it('navigates with the sidebar', async () => {
     const user = userEvent.setup();
-    renderApp('/');
+    renderApp('/analysis');
     const nav = screen.getByRole('navigation', { name: 'Main navigation' });
 
-    await user.click(within(nav).getByRole('link', { name: /Code Analysis/ }));
-    expect(screen.getByRole('heading', { level: 1, name: 'Code Analysis' })).toBeInTheDocument();
     await user.click(within(nav).getByRole('link', { name: /Analysis Results/ }));
     expect(screen.getByRole('heading', { level: 1, name: 'Analysis Results' })).toBeInTheDocument();
+    await user.click(within(nav).getByRole('link', { name: /Home/ }));
+    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(/find the bug/i);
   });
 
-  it('redirects unknown routes to the dashboard', () => {
+  it('redirects unknown routes to the landing page', () => {
     renderApp('/does-not-exist');
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(/find the bug/i);
   });
 
   it('opens and closes the mobile navigation', async () => {
     const user = userEvent.setup();
-    renderApp('/');
+    renderApp('/analysis');
     await user.click(screen.getByRole('button', { name: 'Open navigation' }));
     expect(screen.getByRole('complementary', { name: 'Sidebar' })).toHaveClass('sidebar--open');
     await user.keyboard('{Escape}');

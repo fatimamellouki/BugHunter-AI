@@ -17,7 +17,7 @@ Copy-Item .env.example .env
 npm run dev
 ```
 
-Open http://localhost:5173.
+Open http://localhost:5173. The landing page is at `/`; the app lives at `/analysis` and `/results`.
 
 ## Scripts
 
@@ -52,13 +52,13 @@ Restart `npm run dev` after editing `.env`.
 
 ```
 src/
-  components/  layout/ editor/ analysis/ common/   presentational components
+  components/  landing/ layout/ editor/ analysis/ common/   presentational components
   context/     AnalysisContext.jsx                  shares the analysis between pages
   hooks/       useCodeAnalysis.js                   state machine of an analysis
-  pages/       Dashboard, CodeAnalysis, AnalysisResults
+  pages/       Landing (route "/"), CodeAnalysis, AnalysisResults
   services/    api.js                               the only place that calls fetch
   utils/       validators, formatters, codeLines, clipboard, constants
-  styles/      variables.css, global.css, components.css, pages.css
+  styles/      variables.css (light theme tokens), global.css, components.css, pages.css, landing.css
   test/        setup, Monaco mock, backend fixtures
 ```
 
